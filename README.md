@@ -1,15 +1,20 @@
-[![Tests](https://github.com/yandex-praktikum/react-mesto-api-full-gha/actions/workflows/tests.yml/badge.svg)](https://github.com/yandex-praktikum/react-mesto-api-full-gha/actions/workflows/tests.yml)
-# react-mesto-api-full
-Репозиторий для приложения проекта `Mesto`, включающий фронтенд и бэкенд части приложения со следующими возможностями: авторизации и регистрации пользователей, операции с карточками и пользователями. Бэкенд расположите в директории `backend/`, а фронтенд - в `frontend/`. 
+[![Tests](https://github.com/okvokv/react-mesto-api-full-gha/actions/workflows/tests.yml/badge.svg)](https://github.com/okvokv/react-mesto-api-full-gha/actions/workflows/tests.yml)
+###  Учебный проект Mesto фронтенд + бэкенд (react-mesto-api-full) 
+
+      результат выполнения практической работы на Яндекс-Практикуме.
+
+Представляет собой итоговый полный проект, включающий фронтенд и бэкенд части со следующими возможностями: авторизации и регистрации пользователей, операции с профилем пользователей и карточками.  
   
-Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
+Адрес репозитория: https://github.com/okvokv/react-mesto-api-full-gha
 
-Адрес репозитория: https://github.com/...
 
-## Ссылки на проект
+ссылка на сервер в облаке:	
+https://console.cloud.yandex.ru/folders/b1gkf7fffpiggum0em66/compute/instances
 
-IP-адрес x.x.x.x
+####   Ссылки на проект для автотестов
 
-Frontend https://...
+IP <84.201.136.149>
 
-Backend https://...
+Frontend  https://okvokv-front.students.nomoredomains.monster
+
+Backend   https://okvokv-back.students.nomoredomains.monster 
