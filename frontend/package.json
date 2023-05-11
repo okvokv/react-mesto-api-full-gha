@@ -1,5 +1,5 @@
 {
-  "homepage": "https://okvokv.github.io/react-mesto-auth",
+  "homepage": "http://okvokv-front.users.nomoredomains.monster",
   "name": "react-mesto-auth",
   "version": "0.1.0",
   "private": true,
@@ -41,20 +41,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "gh-pages": "^5.0.0",
-    "nodemon": "^2.0.22"
-  },
-  "description": "**Учебный проект \"Реакт-Место-auth\" (react-mesto-auth)** (описание проекта)",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/okvokv/react-mesto-auth.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/okvokv/react-mesto-auth/issues"
-  }
+  "devDependencies": {}
 }

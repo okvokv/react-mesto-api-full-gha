@@ -13,6 +13,9 @@ const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const { requestsLogger, errorsLogger } = require('./middlewares/logger');
 
+// подключение серверного модуля для интерпретации файла
+const app = express();
+
 // назначение порта сервера
 const { PORT } = config;
 
@@ -20,9 +23,6 @@ const { PORT } = config;
 mongoose.connect('mongodb://0.0.0.0:27017/mestodb')
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.log(err));
-
-// подключение серверного модуля для интерпретации файла
-const app = express();
 
 // сборка приходящих cookies
 app.use(cookieParser());
