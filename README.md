@@ -1,5 +1,5 @@
 [![Tests](https://github.com/okvokv/react-mesto-api-full-gha/actions/workflows/tests.yml/badge.svg)](https://github.com/okvokv/react-mesto-api-full-gha/actions/workflows/tests.yml)
-###  Учебный проект Mesto фронтенд + бэкенд (react-mesto-api-full) 
+###  Учебный проект Mesto фронтенд + бэкенд (react-mesto-api-full-gha) 
 
       результат выполнения практической работы на Яндекс-Практикуме.
 
