@@ -32,7 +32,7 @@ function App() {
   const location = useLocation();
   //объявление данных массива карточек в глобальной области
   const [cardsData, setCardsData] = useState([]);
-  
+
   // сверка жетона при открытии страницы
   useEffect(() => {
     api.getUserData()
@@ -51,9 +51,7 @@ function App() {
   //получение массива карточек, однократно
   useEffect(() => {
     api.getAllCardsData()
-      .then(cardsData => {
-        setCardsData(cardsData);
-      })
+      .then(cardsData => setCardsData(cardsData))
       .catch(err => console.log('Внутренняя ошибка: ', err))
   }, []);
 
@@ -78,6 +76,7 @@ function App() {
   const [headerBtnText, setHeaderBtnText] = useState('Регистрация')
   //задание текста кнопки сохранения в глобальной области
   const [submitBtnText, setSubmitBtnText] = useState('Войти');
+
   //функция для изменения текста кнопки при отправке данных
   function changeSubmitBtnText(text) {
     setSubmitBtnText(text);
@@ -112,28 +111,27 @@ function App() {
     auth.registrate(email, password)
       .then(() => {
         setRegSuccess(true);
-        setInfoTooltipOpened(true);
         setUserEmail(email);
         setUserPwd(password);
-        navigate('/sign-in')
-
+        setInfoTooltipOpened(true);
+        navigate('/sign-in');
       })
       .catch(err => {
         setRegSuccess(false);
-        setInfoTooltipOpened(true);
         console.log('Внутренняя ошибка: ', err);
+        setInfoTooltipOpened(true);
       })
   };
 
   //функция переключения страницы
   function handleTogglePage() {
     if (location.pathname === '/sign-in') {
-      navigate('/sign-up')
-      setHeaderBtnText('Вход')
+      setHeaderBtnText('Вход');
+      navigate('/sign-up');
       return;
     }
-    navigate('/sign-in')
-    setHeaderBtnText('Регистрация')
+    setHeaderBtnText('Регистрация');
+    navigate('/sign-in');
   };
 
   //функция обработки выхода с сайта
