@@ -40,20 +40,17 @@ function App() {
         setUserEmail(userData.email);
         setCurrentUserData(userData);
         setLoggedIn(true);
-        navigate('/')
+        navigate('/');
+        //получение массива карточек, однократно
+        api.getAllCardsData()
+          .then(cardsData => setCardsData(cardsData))
+          .catch(err => console.log('Внутренняя ошибка: ', err))
       })
       .catch(err => {
         setLoggedIn(false);
         console.log('Внутренняя ошибка: ', err);
       })
   }, [0, navigate]);
-
-  //получение массива карточек, однократно
-  useEffect(() => {
-    api.getAllCardsData()
-      .then(cardsData => setCardsData(cardsData))
-      .catch(err => console.log('Внутренняя ошибка: ', err))
-  }, []);
 
   //----------------------------------------------------------------------------------
   //объявление переменных очистки форм
