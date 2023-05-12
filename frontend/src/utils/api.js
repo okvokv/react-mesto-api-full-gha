@@ -3,12 +3,13 @@ import BaseApi from './BaseApi.js';
 class Api extends BaseApi {
 
 	//метод получения данных пользователя
-	_getUserData() {
+	getUserData() {
+		const token = this._getToken();
 		return this._request('users/me', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: this._getToken(),
+				authorization: token,
 				credentials: 'include'
 			}
 		})
@@ -16,28 +17,25 @@ class Api extends BaseApi {
 
 	//метод получения массива карточек с сервера
 	getAllCardsData() {
+		const token = this._getToken();
 		return this._request('cards', {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: this._getToken(),
+				authorization: token,
 				credentials: 'include'
 			}
 		})
 	};
 
-	//метод получения начальных данных (общий)
-	getInitialData() {
-		return Promise.all([this._getUserData(), this.getAllCardsData()])
-	};
-
 	//метод замены аватара пользователя	
 	setAvatar(_link) {
+		const token = this._getToken();
 		return this._request('users/me/avatar', {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: this._getToken(),
+				authorization: token,
 				credentials: 'include'
 			},
 			body: JSON.stringify({
@@ -48,11 +46,12 @@ class Api extends BaseApi {
 
 	//метод сохранения данных пользователя в профиль на сервер
 	setUserInfo(_name, _description) {
+		const token = this._getToken();
 		return this._request('users/me', {
 			method: 'PATCH',
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: this._getToken(),
+				authorization: token,
 				credentials: 'include'
 			},
 			body: JSON.stringify({
@@ -65,11 +64,12 @@ class Api extends BaseApi {
 	//------------------------------------------------------------------------------
 	//метод добавления новой карточки на сервер и получения информации о результате
 	addNewCard(_cardName, _cardLink) {
+		const token = this._getToken();
 		return this._request('cards', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: this._getToken(),
+				authorization: token,
 				credentials: 'include'
 			},
 			body: JSON.stringify({
@@ -81,11 +81,12 @@ class Api extends BaseApi {
 
 	//метод удаления своей карточки на сервере и получения информации о результате
 	deleteCard(_cardId) {
+		const token = this._getToken();
 		return this._request(`cards/${_cardId}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: this._getToken(),
+				authorization: token,
 				credentials: 'include'
 			}
 		})
@@ -93,11 +94,12 @@ class Api extends BaseApi {
 
 	//метод установки лайка и получения данных о результате
 	setLike(_cardId) {
+		const token = this._getToken();
 		return this._request(`cards/${_cardId}/likes`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: this._getToken(),
+				authorization: token,
 				credentials: 'include'
 			}
 		})
@@ -105,11 +107,12 @@ class Api extends BaseApi {
 
 	//метод удаления лайка (поставленного пользователем)
 	deleteLike(_cardId) {
+		const token = this._getToken();
 		return this._request(`cards/${_cardId}/likes`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
-				authorization: this._getToken(),
+				authorization: token,
 				credentials: 'include'
 			}
 		})

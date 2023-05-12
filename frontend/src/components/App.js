@@ -20,34 +20,41 @@ import InfoTooltip from './InfoTooltip.js';
 //гибридный элемент всего проекта
 function App() {
   //---------------------------------------------------------------------------------
-  //объявление данных пользователя в глобальной области
-  const [currentUserData, setCurrentUserData] = useState({ name: 'Жак-Ив Кусто', about: 'Исследователь океана', avatar: avatar });
-  //объявление данных массива карточек в глобальной области
-  const [cardsData, setCardsData] = useState([]);
   //обьявление значения почты и пароля пользователя в глобальной области
   const [userEmail, setUserEmail] = useState('');
-  const [userPwd, setUserPwd] = useState('')
+  const [userPwd, setUserPwd] = useState('');
+  //объявление данных пользователя в глобальной области
+  const [currentUserData, setCurrentUserData] = useState({ name: 'Жак-Ив Кусто', about: 'Исследователь океана', avatar: avatar });
   //объявление состояния индикатора входа в глобальной области
   const [loggedIn, setLoggedIn] = useState(false);
   //задание переменной навигации и извлечения теущего адреса
   const navigate = useNavigate();
   const location = useLocation();
-
-  //получение начальных данных с сервера, то же самое, что и проверка жетона при входе, однократно
+  //объявление данных массива карточек в глобальной области
+  const [cardsData, setCardsData] = useState([]);
+  
+  // сверка жетона при открытии страницы
   useEffect(() => {
-    api.getInitialData()
-      .then(data => {
-        const [currentUserData, cardsData] = data;
-        setCurrentUserData(currentUserData);
-        setCardsData(cardsData);
-        setUserEmail(currentUserData.email);
+    api.getUserData()
+      .then(userData => {
+        setUserEmail(userData.email);
+        setCurrentUserData(userData);
         setLoggedIn(true);
-        navigate('/');
+        navigate('/')
       })
       .catch(err => {
         setLoggedIn(false);
         console.log('Внутренняя ошибка: ', err);
       })
+  }, [0, navigate]);
+
+  //получение массива карточек, однократно
+  useEffect(() => {
+    api.getAllCardsData()
+      .then(cardsData => {
+        setCardsData(cardsData);
+      })
+      .catch(err => console.log('Внутренняя ошибка: ', err))
   }, []);
 
   //----------------------------------------------------------------------------------
