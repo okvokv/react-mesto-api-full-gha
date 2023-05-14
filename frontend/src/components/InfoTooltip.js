@@ -17,7 +17,9 @@ function InfoTooltip(props) {
 					src={props.success ? successIcon : failureIcon}
 					alt={props.success ? 'Галочка' : 'Крестик'}
 				/>
-				<p className="form__reg-message">{props.success ? 'Вы успешно зарегистрировались !' : 'Что-то пошло не так ! Пропробуйте ещё раз.'}</p>
+				<p
+					className="form__reg-message">{props.success ? 'Вы успешно зарегистрировались !' : 'Что-то пошло не так ! Пропробуйте ещё раз.'}
+				</p>
 			</div>
 		</Popup>
 	)

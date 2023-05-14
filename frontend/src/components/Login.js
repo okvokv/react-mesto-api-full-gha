@@ -10,11 +10,13 @@ function Login(props) {
   //------------------------------------------------------------------------
   //функция изменения почты
   function handleChangeEmail(event) {
+    props.onEmailChange(event.target.value);
     setEmail(event.target.value);
   }
 
   //функция изменения пароля
   function handleChangePassword(event) {
+    props.onPasswordChange(event.target.value);
     setPassword(event.target.value);
   }
 
@@ -22,7 +24,7 @@ function Login(props) {
   function handleSubmit(event) {
     event.preventDefault();
     props.changeBtnText('Вход...');
-    props.onLogIn(email, password);
+    props.onSubmit(email, password);
   };
 
   return (

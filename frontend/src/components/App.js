@@ -23,6 +23,10 @@ function App() {
   //обьявление значения почты и пароля пользователя в глобальной области
   const [userEmail, setUserEmail] = useState('');
   const [userPwd, setUserPwd] = useState('');
+  //задание текста кнопки header'а в глобальной области
+  const [headerBtnText, setHeaderBtnText] = useState('Регистрация')
+  //задание текста кнопки сохранения в глобальной области
+  const [submitBtnText, setSubmitBtnText] = useState('Войти');
   //объявление данных пользователя в глобальной области
   const [currentUserData, setCurrentUserData] = useState({ name: 'Жак-Ив Кусто', about: 'Исследователь океана', avatar: avatar });
   //объявление состояния индикатора входа в глобальной области
@@ -41,7 +45,6 @@ function App() {
         setCurrentUserData(userData);
         setLoggedIn(true);
         navigate('/');
-        //получение массива карточек, однократно
         api.getAllCardsData()
           .then(cardsData => setCardsData(cardsData))
           .catch(err => console.log('Внутренняя ошибка: ', err))
@@ -69,10 +72,15 @@ function App() {
   };
 
   //-------------------------------------------------------------------------------
-  //задание текста кнопки header'а в глобальной области
-  const [headerBtnText, setHeaderBtnText] = useState('Регистрация')
-  //задание текста кнопки сохранения в глобальной области
-  const [submitBtnText, setSubmitBtnText] = useState('Войти');
+  // функция для изменения email при заполнении форм регистрации или входа
+  function changeEmail(email) {
+    setUserEmail(email);
+  };
+
+  // функция для изменения password при заполнении форм регистрации или входа
+  function changePassword(password) {
+    setUserPwd(password);
+  };
 
   //функция для изменения текста кнопки при отправке данных
   function changeSubmitBtnText(text) {
@@ -80,14 +88,12 @@ function App() {
   };
 
   //----------------------------------------------------------------------------
-
   //функция отправки данных для авторизации и обработки ответа
   function handleLogIn(email, password) {
     auth.logIn(email, password)
       .then(data => {
         // сохранить полученный жетон
         localStorage.setItem('jwt', data.token); // или он сам сохраняется в куках
-        setUserEmail(email);
         setLoggedIn(true);
         navigate('/');
       })
@@ -98,18 +104,17 @@ function App() {
       })
   };
 
-  //объявление состояния попапа информации о регистрации в глобальной области
-  const [infoTooltipOpened, setInfoTooltipOpened] = useState(false);
   //объявление состояния регистрации в глобальной области
   const [regSuccess, setRegSuccess] = useState(false);
+  //объявление состояния попапа информации о регистрации в глобальной области
+  const [infoTooltipOpened, setInfoTooltipOpened] = useState(false);
 
   //функция отправки данных на регистрацию и обработки ответа
   function handleRegistration(email, password) {
     auth.registrate(email, password)
       .then(() => {
         setRegSuccess(true);
-        setUserEmail(email);
-        setUserPwd(password);
+        setHeaderBtnText('Регистрация');
         setInfoTooltipOpened(true);
         navigate('/sign-in');
       })
@@ -134,10 +139,11 @@ function App() {
   //функция обработки выхода с сайта
   function handleLogOut() {
     localStorage.removeItem('jwt');
-    setSubmitBtnText('Войти');
     setUserEmail('');
     setUserPwd('');
+    setSubmitBtnText('Войти');
     setLoggedIn(false);
+    navigate('/sign-in');
   };
 
   //----------------------------------------------------------------------------------
@@ -258,8 +264,8 @@ function App() {
         {/*Секция заголовок ======================================= */}
         <Header
           loggedIn={loggedIn}
-          userEmail={userEmail}
           btnText={headerBtnText}
+          email={userEmail}
           onTogglePage={handleTogglePage}
           onLogOut={handleLogOut}
         />
@@ -281,8 +287,12 @@ function App() {
           <Route path='/sign-up' element={
             <Register
               btnText='Зарегистрироваться'
+              email={userEmail}
+              password={userPwd}
+              onEmailChange={changeEmail}
+              onPasswordChange={changePassword}
               onTogglePage={handleTogglePage}
-              onRegistration={handleRegistration}
+              onSubmit={handleRegistration}
             />}
           />
           <Route path='/sign-in' element={
@@ -291,7 +301,9 @@ function App() {
               changeBtnText={changeSubmitBtnText}
               email={userEmail}
               password={userPwd}
-              onLogIn={handleLogIn}
+              onEmailChange={changeEmail}
+              onPasswordChange={changePassword}
+              onSubmit={handleLogIn}
             />}
           />
           <Route path="*" element={
