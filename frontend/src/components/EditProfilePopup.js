@@ -32,8 +32,8 @@ function ProfileEditPopup(props) {
 	//промежуточная функция отправки содержания
 	function handleSubmit(event) {
 		event.preventDefault();
-		props.changeBtnText('Сохранение...');
-		props.onUpdateUser(name, description);
+		props.onChangeBtnText('Сохранение...');
+		props.onSubmit(name, description);
 	};
 
 	//----------------------------------------------------------------------

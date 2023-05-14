@@ -5,8 +5,8 @@ function PopupWithConfirmation(props) {
 	//промежуточная функция обработки запроса на удаление
 	function handleSubmit(event) {
 		event.preventDefault();
-		props.changeBtnText('Удаление...');
-		props.onCardDelete(props.clickedImage)
+		props.onChangeBtnText('Удаление...');
+		props.onSubmit(props.clickedImage)
 	};
 
 	return (

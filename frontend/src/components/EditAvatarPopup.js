@@ -10,8 +10,8 @@ function AvatarEditPopup(props) {
 	//промежуточная функция отправки ссылки
 	function handleSubmit(event) {
 		event.preventDefault();
-		props.changeBtnText('Сохранение...');
-		props.onUpdateAvatar(avatarLink.current.value);
+		props.onChangeBtnText('Сохранение...');
+		props.onSubmit(avatarLink.current.value);
 	}
 
 	//функция очистки формы после успешной отправки данных

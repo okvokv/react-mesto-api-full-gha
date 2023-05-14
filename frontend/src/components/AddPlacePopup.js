@@ -21,8 +21,8 @@ function CardAddPopup(props) {
 	//промежуточная функция отправки данных карточки
 	function handleSubmit(event) {
 		event.preventDefault();
-		props.changeBtnText('Сохранение...');
-		props.onCardAdd(cardName, cardLink);
+		props.onChangeBtnText('Сохранение...');
+		props.onSubmit(cardName, cardLink);
 	};
 
 	//функция очистки формы после успешной отправки данных

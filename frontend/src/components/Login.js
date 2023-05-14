@@ -23,7 +23,7 @@ function Login(props) {
   //промежуточная функция отправки данных
   function handleSubmit(event) {
     event.preventDefault();
-    props.changeBtnText('Вход...');
+    props.onChangeBtnText('Вход...');
     props.onSubmit(email, password);
   };
 

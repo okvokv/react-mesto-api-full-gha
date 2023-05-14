@@ -72,16 +72,6 @@ function App() {
   };
 
   //-------------------------------------------------------------------------------
-  // функция для изменения email при заполнении форм регистрации или входа
-  function changeEmail(email) {
-    setUserEmail(email);
-  };
-
-  // функция для изменения password при заполнении форм регистрации или входа
-  function changePassword(password) {
-    setUserPwd(password);
-  };
-
   //функция для изменения текста кнопки при отправке данных
   function changeSubmitBtnText(text) {
     setSubmitBtnText(text);
@@ -289,8 +279,8 @@ function App() {
               btnText='Зарегистрироваться'
               email={userEmail}
               password={userPwd}
-              onEmailChange={changeEmail}
-              onPasswordChange={changePassword}
+              onEmailChange={(email) => setUserEmail(email)}
+              onPasswordChange={(password) => setUserPwd(password)}
               onTogglePage={handleTogglePage}
               onSubmit={handleRegistration}
             />}
@@ -298,11 +288,11 @@ function App() {
           <Route path='/sign-in' element={
             <Login
               btnText={submitBtnText}
-              changeBtnText={changeSubmitBtnText}
+              onChangeBtnText={changeSubmitBtnText}
               email={userEmail}
               password={userPwd}
-              onEmailChange={changeEmail}
-              onPasswordChange={changePassword}
+              onEmailChange={(email) => setUserEmail(email)}
+              onPasswordChange={(password) => setUserPwd(password)}
               onSubmit={handleLogIn}
             />}
           />
@@ -317,40 +307,40 @@ function App() {
         {/*Всплывающие окна c формой смены аватара ================*/}
         <AvatarEditPopup
           btnText={submitBtnText}
-          changeBtnText={changeSubmitBtnText}
+          onChangeBtnText={changeSubmitBtnText}
           opened={avatarEditPopupOpened}
           onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
+          onSubmit={handleUpdateAvatar}
           reset={avatarFormReset}
         />
 
         {/*Всплывающие окна c формой редактирования профиля ========*/}
         <ProfileEditPopup
           btnText={submitBtnText}
-          changeBtnText={changeSubmitBtnText}
+          onChangeBtnText={changeSubmitBtnText}
           opened={profileEditPopupOpened}
           onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
+          onSubmit={handleUpdateUser}
         />
 
         {/*Всплывающие окна c формой добавления контента ===========*/}
         <CardAddPopup
           btnText={submitBtnText}
-          changeBtnText={changeSubmitBtnText}
+          onChangeBtnText={changeSubmitBtnText}
           opened={cardAddPopupOpened}
           onClose={closeAllPopups}
-          onCardAdd={handleCardAdd}
+          onSubmit={handleCardAdd}
           reset={cardFormReset}
         />
 
         {/*Всплывающее окно с формой подтверждения удаления ========*/}
         <PopupWithConfirmation
           btnText={submitBtnText}
-          changeBtnText={changeSubmitBtnText}
+          onChangeBtnText={changeSubmitBtnText}
           clickedImage={clickedImage}
           opened={popupWithConfirmationOpened}
           onClose={closeAllPopups}
-          onCardDelete={handleDeleteCard}
+          onSubmit={handleDeleteCard}
         />
 
         {/*Всплывающее окно с картинкой ============================= */}
