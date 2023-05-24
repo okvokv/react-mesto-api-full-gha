@@ -55,7 +55,7 @@ function App() {
         setLoggedIn(false);
         console.log('Внутренняя ошибка: ', err);
       })
-  }, [0, navigate]);
+  }, [navigate]);
 
   //----------------------------------------------------------------------------------
   //объявление переменных очистки форм
@@ -84,7 +84,6 @@ function App() {
   function handleLogIn(email, password) {
     auth.logIn(email, password)
       .then(data => {
-        console.log(data);
         setLoggedIn(true);
         // жетон сам сохраняется в куках
         navigate('/');
@@ -129,15 +128,14 @@ function App() {
   };
 
   //функция удаления кук с жетоном
-  function removeCookie(name) {
-    document.cookie = `${name}=; maxAge=0; path=/`;
+  function removeCookie() {
+    document.cookie = 'token=; maxAge=0; path=/;' ;
   }
 
   //функция обработки выхода с сайта
   function handleLogOut() {
     setLoggedIn(false);
-    // localStorage.removeItem('jwt'); // удаление жетона из локального хранилища 
-    removeCookie('jwt');// удаление жетона, сохранённого в куках
+    removeCookie(); // удаление жетона, сохранённого в куках
     setUserEmail('');
     setUserPwd('');
     setSubmitBtnText('Войти');

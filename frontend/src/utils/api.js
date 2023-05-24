@@ -5,7 +5,6 @@ class Api extends BaseApi {
 	//метод получения данных пользователя
 	getUserData() {
 		// const token = this._getToken();
-		console.log('куки фронтэнд', document.cookie)
 		return this._request('users/me', {
 			method: 'GET',
 			credentials: 'include',
