@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import useFormValidation from '../hooks/FormValidator.js';
 import PopupWithForm from './PopupWithForm.js';
 
 //гибридный элемент - всплывающее окно редактирования профиля
@@ -8,27 +9,13 @@ function ProfileEditPopup(props) {
 	//подписка на контекст
 	const currentUserData = React.useContext(CurrentUserContext);
 
-	//объявление частных данных в глобальной области
-	const [name, setName] = useState(currentUserData.name);
-	const [description, setDescription] = useState(currentUserData.about);
+	// объявление данных в глобальной области
+	const { valid, values, errorSpans, handleChangeValue } = useFormValidation({name: currentUserData.name, description: currentUserData.about}, false, {});
 
-	//задание обновления данных пользователя
-	useEffect(() => {
-		setName(currentUserData.name);
-		setDescription(currentUserData.about);
-	}, [currentUserData, props.opened]);
+	const {name, description} = values;
+	const {nameError, descriptionError} = errorSpans;
 
 	//------------------------------------------------------------------------
-	//функция изменения имени
-	function handleChangeName(event) {
-		setName(event.target.value);
-	}
-
-	//функция изменения описания
-	function handleChangeDescription(event) {
-		setDescription(event.target.value);
-	}
-
 	//промежуточная функция отправки содержания
 	function handleSubmit(event) {
 		event.preventDefault();
@@ -42,39 +29,40 @@ function ProfileEditPopup(props) {
 			type='profile'
 			formTitle='Редактировать профиль'
 			btnText={props.btnText}
+			btnDisabled={!valid}
 			opened={props.opened}
 			onClose={props.onClose}
 			onSubmit={handleSubmit}
 		>
 			{/* == ядро с формой редактирования профиля ====================*/}
 			<input
-				className="form__field form__field_type_name"
+				className={`form__field form__field_type_name ${nameError &&'form__field_type_error'}`}
 				type="text"
 				placeholder="Имя"
 				name="name"
 				minLength="2"
 				maxLength="50"
 				value={name}
-				onChange={handleChangeName}
+				onChange={handleChangeValue}
 				autoFocus
 				required
 			/>
 
-			<span className="form__error-message" id="name-error"></span>
+			<span className="form__error-message" id="name-error">{nameError}</span>
 
 			<input
-				className="form__field form__field_type_description"
+				className={`{form__field form__field_type_description ${descriptionError &&'form__field_type_error'}`}
 				type="text"
 				placeholder="О себе"
 				name="description"
 				minLength="2"
 				maxLength="200"
 				value={description}
-				onChange={handleChangeDescription}
+				onChange={handleChangeValue}
 				required
 			/>
 
-			<span className="form__error-message" id="description-error"></span>
+			<span className="form__error-message" id="description-error">{descriptionError}</span>
 		</PopupWithForm>
 	);
 };

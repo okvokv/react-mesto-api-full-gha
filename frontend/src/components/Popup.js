@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 //гибридный компонент Popup для обертки любых попапов
-function Popup (props) {
+function Popup(props) {
 	//обработка нажатия на Escape
 	useEffect(() => {
 		function closeByEscape(event) {

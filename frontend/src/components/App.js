@@ -23,14 +23,16 @@ function App() {
   //обьявление значения почты и пароля пользователя в глобальной области
   const [userEmail, setUserEmail] = useState('');
   const [userPwd, setUserPwd] = useState('');
+  const [valid, setValid] = useState(false);
+  const [errorSpans, setErrorSpans] = useState('');
+  //объявление состояния индикатора входа в глобальной области
+  const [loggedIn, setLoggedIn] = useState(false);
   //задание текста кнопки header'а в глобальной области
   const [headerBtnText, setHeaderBtnText] = useState('Регистрация')
   //задание текста кнопки сохранения в глобальной области
   const [submitBtnText, setSubmitBtnText] = useState('Войти');
   //объявление данных пользователя в глобальной области
   const [currentUserData, setCurrentUserData] = useState({ name: 'Жак-Ив Кусто', about: 'Исследователь океана', avatar: avatar });
-  //объявление состояния индикатора входа в глобальной области
-  const [loggedIn, setLoggedIn] = useState(false);
   //задание переменной навигации и извлечения теущего адреса
   const navigate = useNavigate();
   const location = useLocation();
@@ -82,9 +84,9 @@ function App() {
   function handleLogIn(email, password) {
     auth.logIn(email, password)
       .then(data => {
-        // сохранить полученный жетон
-        localStorage.setItem('jwt', data.token); // или он сам сохраняется в куках
+        console.log(data);
         setLoggedIn(true);
+        // жетон сам сохраняется в куках
         navigate('/');
       })
       .catch(err => {
@@ -126,13 +128,19 @@ function App() {
     navigate('/sign-in');
   };
 
+  //функция удаления кук с жетоном
+  function removeCookie(name) {
+    document.cookie = `${name}=; maxAge=0; path=/`;
+  }
+
   //функция обработки выхода с сайта
   function handleLogOut() {
-    localStorage.removeItem('jwt');
+    setLoggedIn(false);
+    // localStorage.removeItem('jwt'); // удаление жетона из локального хранилища 
+    removeCookie('jwt');// удаление жетона, сохранённого в куках
     setUserEmail('');
     setUserPwd('');
     setSubmitBtnText('Войти');
-    setLoggedIn(false);
     navigate('/sign-in');
   };
 
@@ -253,8 +261,8 @@ function App() {
 
         {/*Секция заголовок ======================================= */}
         <Header
-          loggedIn={loggedIn}
           btnText={headerBtnText}
+          loggedIn={loggedIn}
           email={userEmail}
           onTogglePage={handleTogglePage}
           onLogOut={handleLogOut}
@@ -274,29 +282,39 @@ function App() {
               loggedIn={loggedIn}
             />}
           />
+          <Route path='/sign-in' element={
+            // Секция вход ============================================//
+            <Login
+              btnText={submitBtnText}
+              email={userEmail}
+              pwd={userPwd}
+              valid={valid}
+              errorSpans={errorSpans}
+              onEmailChange={(email) => setUserEmail(email)}
+              onPwdChange={(pwd) => setUserPwd(pwd)}
+              onValidChange={(valid) => setValid(valid)}
+              onErrorSpansChange={(errorSpans) => setErrorSpans(errorSpans)}
+              onChangeBtnText={changeSubmitBtnText}
+              onSubmit={handleLogIn}
+            />}
+          />
           <Route path='/sign-up' element={
+            // Секция регистрация =====================================//
             <Register
               btnText='Зарегистрироваться'
               email={userEmail}
-              password={userPwd}
+              pwd={userPwd}
+              valid={valid}
+              errorSpans={errorSpans}
               onEmailChange={(email) => setUserEmail(email)}
-              onPasswordChange={(password) => setUserPwd(password)}
+              onPwdChange={(pwd) => setUserPwd(pwd)}
+              onValidChange={(valid) => setValid(valid)}
+              onErrorSpansChange={(errorSpans) => setErrorSpans(errorSpans)}
               onTogglePage={handleTogglePage}
               onSubmit={handleRegistration}
             />}
           />
-          <Route path='/sign-in' element={
-            <Login
-              btnText={submitBtnText}
-              onChangeBtnText={changeSubmitBtnText}
-              email={userEmail}
-              password={userPwd}
-              onEmailChange={(email) => setUserEmail(email)}
-              onPasswordChange={(password) => setUserPwd(password)}
-              onSubmit={handleLogIn}
-            />}
-          />
-          <Route path="*" element={
+          <Route path='*' element={
             <Navigate to='/' replace />}
           />
         </Routes>
@@ -304,7 +322,7 @@ function App() {
         {/*Подножие сайта =========================================*/}
         <Footer />
 
-        {/*Всплывающие окна c формой смены аватара ================*/}
+        {/*Всплывающее окно c формой смены аватара ================*/}
         <AvatarEditPopup
           btnText={submitBtnText}
           onChangeBtnText={changeSubmitBtnText}
@@ -314,7 +332,7 @@ function App() {
           reset={avatarFormReset}
         />
 
-        {/*Всплывающие окна c формой редактирования профиля ========*/}
+        {/*Всплывающее окно c формой редактирования профиля ========*/}
         <ProfileEditPopup
           btnText={submitBtnText}
           onChangeBtnText={changeSubmitBtnText}
@@ -323,7 +341,7 @@ function App() {
           onSubmit={handleUpdateUser}
         />
 
-        {/*Всплывающие окна c формой добавления контента ===========*/}
+        {/*Всплывающее окно c формой добавления контента ===========*/}
         <CardAddPopup
           btnText={submitBtnText}
           onChangeBtnText={changeSubmitBtnText}

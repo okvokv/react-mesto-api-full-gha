@@ -1,65 +1,52 @@
-import { useState } from 'react';
+import FieldSet from './FieldSet.js';
 
 //гибридный элемент - страница входа
 function Login(props) {
 
-  //объявление данных входа в глобальной области
-  const [email, setEmail] = useState(props.email);
-  const [password, setPassword] = useState(props.password);
+  function handleEmailChange(email) {
+    props.onEmailChange(email);
+  }
+
+  function handlePwdChange(pwd) {
+    props.onPwdChange(pwd);
+  }
+
+  function handleValidChange(valid) {
+    props.onValidChange(valid)
+  }
+
+  function handleErrorSpansChange(errorSpans) {
+    props.onErrorSpansChange(errorSpans)
+  }
 
   //------------------------------------------------------------------------
-  //функция изменения почты
-  function handleChangeEmail(event) {
-    props.onEmailChange(event.target.value);
-    setEmail(event.target.value);
-  }
-
-  //функция изменения пароля
-  function handleChangePassword(event) {
-    props.onPasswordChange(event.target.value);
-    setPassword(event.target.value);
-  }
 
   //промежуточная функция отправки данных
   function handleSubmit(event) {
     event.preventDefault();
     props.onChangeBtnText('Вход...');
-    props.onSubmit(email, password);
+    props.onSubmit(props.email, props.pwd);
   };
 
   return (
     //секция с формой входа ===============================================
     <section className="login">
-      <form className="form form__theme-dark" name="loginForm" onSubmit={handleSubmit}>
+      <form className="form form__theme-dark" name="loginForm" onSubmit={handleSubmit} noValidate>
         <h2 className="form__title form__title_theme-dark">Вход</h2>
-        <input
-          className="form__field form__field_theme-dark"
-          type="email"
-          placeholder="Email"
-          name="email"
-          value={email}
-          onChange={handleChangeEmail}
-          autoFocus
-          required
+
+        {/* сюда поступает форма */}
+        <FieldSet
+          btnText={props.btnText}
+          email={props.email}
+          pwd={props.pwd}
+          valid={props.valid}
+          errorSpans={props.errorSpans}
+          onEmailChange={handleEmailChange}
+          onPwdChange={handlePwdChange}
+          onValidChange={handleValidChange}
+          onErrorSpansChange={handleErrorSpansChange}
         />
-        <span className="form__error-message" id="email-error"></span>
-        <input
-          className="form__field form__field_theme-dark"
-          type="password"
-          placeholder="Пароль"
-          name="pwd"
-          minLength="8"
-          maxLength="100"
-          value={password}
-          onChange={handleChangePassword}
-          required
-        />
-        <span className="form__error-message" id="pwd-error"></span>
-        <button
-          className="form__submit-button form__submit-button_theme-dark"
-          type="submit"
-          aria-label="кнопка Войти">{props.btnText}
-        </button>
+
       </form>
     </section>
   );

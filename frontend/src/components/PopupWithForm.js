@@ -11,6 +11,7 @@ function PopupWithForm(props) {
 				className={`form form_type_${props.type}`}
 				name={`${props.type}Form`}
 				onSubmit={props.onSubmit}
+				noValidate
 			>
 				<h2 className="form__title">{props.formTitle}</h2>
 
@@ -18,9 +19,10 @@ function PopupWithForm(props) {
 				{props.children}
 
 				<button
-					className="form__submit-button"
+					className= {`form__submit-button ${props.btnDisabled && 'form__submit-button_disabled'}`}
 					type="submit"
 					aria-label="кнопка cохранения"
+					disabled={props.btnDisabled}
 				>{props.btnText}</button>
 
 			</form>
